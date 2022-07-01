@@ -1,4 +1,4 @@
-const Config = () =>{
+export default function Config(){
     let config = {
         server:'localhost\\sqlexpress',
         port:1433,
@@ -9,10 +9,6 @@ const Config = () =>{
             enableArithAbort:true
         }
     }
-
     return config;
 }
-
-
-export default Config;
 
