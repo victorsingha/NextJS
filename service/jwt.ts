@@ -2,12 +2,12 @@ import jwt from 'jsonwebtoken';
 
 const key = process.env.TOKEN_KEY || "4nbiu$%$2c67r7#GH@!gr2^%FGVC#RT@S@"
 
-export function generateAccessToken(obj:any) {
+export default function generateAccessToken(obj:any) {
     return jwt.sign(obj, key, { expiresIn: '6400s' });
   }
 
 
-export default function authenticateToken(req:any, res:any, next:any) {
+export function  authenticateToken(req:any, res:any, next:any) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
   
@@ -19,7 +19,3 @@ export default function authenticateToken(req:any, res:any, next:any) {
       next()
     })
   }
-
-
-
-  

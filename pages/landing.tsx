@@ -9,8 +9,10 @@ class mdlReq {
 
 const Landing: NextPage = () => {
   let obj = new mdlReq();
+  let obj2:any;
   const [Req, SetReq] = useState(obj);
   const [IsSubmit, SetIsSubmit] = useState(false);
+  const [Users, SetUsers] = useState(obj2);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -21,7 +23,8 @@ const Landing: NextPage = () => {
     SetIsSubmit(true);
     if (validateEmail(Req.Email) != "") return;
     if (validatePassword(Req.Password) != "") return;
-    alert("Login Success")
+    SetReq({...Req,"Email":"Login Success!"})
+    fetchUser()
   }
   const validateEmail = (value: any) => {
     if (!value) return "Email is Required"
@@ -33,9 +36,21 @@ const Landing: NextPage = () => {
     return "";
   }
 
+ async function fetchUser(){
+    const res = await fetch("http://localhost:3000/api/user");
+    const json = res.json
+    SetUsers(res)
+    console.log(json)
+  }
+
+  useEffect(()=>{
+    fetchUser
+  },[])
+
   return (
     <div>
       <main className={styles.main}>
+      <pre>{JSON.stringify(Users, undefined, 2)}</pre>
         <pre>{JSON.stringify(Req, undefined, 2)}</pre>
         <section>
           <input name="Email" type="text" value={Req.Email} onChange={handleChange} />

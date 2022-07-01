@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConfig from '../../service/dbConfig';
 import sql from 'mssql/msnodesqlv8';
-import { generateAccessToken } from '../../service/jwt';
+import generateAccessToken from '../../service/jwt';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse,) {
     let pool = await sql.connect(dbConfig());
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse,
                     email:request.email,
                 }
                 const token = generateAccessToken(obj)
-                res.status(200).json({Token:token,Data:result.recordset})
+                res.status(200).send({Token:token,Data:result.recordset})
         })
     // res.status(200).json({ name: 'John Doe' })
 }
